@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "android", "web"],
+  "ios": {
+    "modules": ["RnTuyaModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.rntuya.RnTuyaModule"]
+  }
+}
