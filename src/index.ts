@@ -1,26 +1,20 @@
-import { NativeModulesProxy, EventEmitter, Subscription } from 'expo-modules-core';
-
-// Import the native module. On web, it will be resolved to RnTuya.web.ts
-// and on native platforms to RnTuya.ts
+import { EventEmitter, Subscription } from 'expo-modules-core';
 import RnTuyaModule from './RnTuyaModule';
-import RnTuyaView from './RnTuyaView';
-import { ChangeEventPayload, RnTuyaViewProps } from './RnTuya.types';
 
-// Get the native constant value.
-export const PI = RnTuyaModule.PI;
+const emitter = new EventEmitter(RnTuyaModule);
 
-export function hello(): string {
-  return RnTuyaModule.hello();
+export type ThemeChangeEvent = {
+  theme: string;
+};
+
+export function getTheme(): string {
+  return RnTuyaModule.getTheme();
 }
 
-export async function setValueAsync(value: string) {
-  return await RnTuyaModule.setValueAsync(value);
+export function setTheme(theme: string): void {
+  return RnTuyaModule.setTheme(theme);
 }
 
-const emitter = new EventEmitter(RnTuyaModule ?? NativeModulesProxy.RnTuya);
-
-export function addChangeListener(listener: (event: ChangeEventPayload) => void): Subscription {
-  return emitter.addListener<ChangeEventPayload>('onChange', listener);
+export function addThemeListener(listener: (event: ThemeChangeEvent) => void): Subscription {
+  return emitter.addListener<ThemeChangeEvent>('onChangeTheme', listener);
 }
-
-export { RnTuyaView, RnTuyaViewProps, ChangeEventPayload };

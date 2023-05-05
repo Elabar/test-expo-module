@@ -1,5 +1,8 @@
 package expo.modules.rntuya
 
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.os.bundleOf
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -13,35 +16,22 @@ class RnTuyaModule : Module() {
     // The module will be accessible from `requireNativeModule('RnTuya')` in JavaScript.
     Name("RnTuya")
 
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants(
-      "PI" to Math.PI
-    )
+    Events("onChangeTheme")
 
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
-
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      "Hello world! 👋"
+    Function("setTheme") { theme: String ->
+      getPreferences().edit().putString("theme", theme).commit()
+      this@RnTuyaModule.sendEvent("onChangeTheme", bundleOf("theme" to theme))
     }
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { value: String ->
-      // Send an event to JavaScript.
-      sendEvent("onChange", mapOf(
-        "value" to value
-      ))
+    Function("getTheme") {
+      return@Function getPreferences().getString("theme", "system")
     }
+  }
 
-    // Enables the module to be used as a native view. Definition components that are accepted as part of
-    // the view definition: Prop, Events.
-    View(RnTuyaView::class) {
-      // Defines a setter for the `name` prop.
-      Prop("name") { view: RnTuyaView, prop: String ->
-        println(prop)
-      }
-    }
+  private val context
+  get() = requireNotNull(appContext.reactContext)
+
+  private fun getPreferences(): SharedPreferences {
+    return context.getSharedPreferences(context.packageName + ".settings", Context.MODE_PRIVATE)
   }
 }
