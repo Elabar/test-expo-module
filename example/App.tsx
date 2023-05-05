@@ -21,7 +21,32 @@ export default function App() {
       <Text>{RnTuya.getTheme()}</Text>
       <Button
         title={`Set theme to ${nextTheme}`}
-        onPress={() => RnTuya.setTheme(nextTheme)}
+        onPress={() => {
+          RnTuya.setTheme(nextTheme)
+          RnTuya.setDebugMode(true);
+        }}
+      />
+      <Button
+        title={`Register`}
+        onPress={async () => {
+          try{
+            await RnTuya.registerAccountWithEmail('my', 'leehoemun@gmail.com', 'hehettqq', 'what code is this')
+
+          }catch(err){
+            console.log(err)
+          }
+        }}
+      />
+      <Button
+        title={`Init`}
+        onPress={async () => {
+          try{
+            await RnTuya.initialize()
+
+          }catch(err){
+            console.log(err)
+          }
+        }}
       />
     </View>
   );

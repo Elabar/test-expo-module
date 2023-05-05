@@ -1,8 +1,18 @@
 package expo.modules.rntuya
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.os.bundleOf
+import com.thingclips.sdk.os.ThingOSUser
+import com.thingclips.sdk.user.ThingBaseUserPlugin
+import com.thingclips.smart.android.base.ThingSmartSdk
+import com.thingclips.smart.android.user.api.IRegisterCallback
+import com.thingclips.smart.android.user.bean.User
+import com.thingclips.smart.home.sdk.ThingHomeSdk
+import expo.modules.kotlin.Promise
+import expo.modules.kotlin.exception.CodedException
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -25,6 +35,29 @@ class RnTuyaModule : Module() {
 
     Function("getTheme") {
       return@Function getPreferences().getString("theme", "system")
+    }
+
+    Function("setDebugMode"){ isDebug: Boolean ->
+      ThingSmartSdk.setDebugMode(isDebug)
+    }
+
+    Function("initialize") {
+      // TODO: to be implement
+    }
+
+    AsyncFunction("registerAccountWithEmail"){ countryCode: String, email: String, passwd: String, code: String, promise: Promise ->
+      ThingHomeSdk.getUserInstance().registerAccountWithEmail(countryCode, email, passwd, code, object : IRegisterCallback {
+        override fun onSuccess(user: User?) {
+          promise.resolve(user)
+        }
+
+        override fun onError(code: String?, error: String?) {
+          if (error != null) {
+            Log.d("tag", error)
+          }
+          promise.reject(CodedException(code, Throwable(error)))
+        }
+      })
     }
   }
 

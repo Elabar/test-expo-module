@@ -26,6 +26,8 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://maven-other.tuya.com/repository/maven-releases/' }
+        maven { url "https://maven-other.tuya.com/repository/maven-commercial-releases/" }
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url(new File(['node', '--print', "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim(), '../android'))
