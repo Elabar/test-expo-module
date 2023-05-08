@@ -43,6 +43,7 @@ class RnTuyaModule : Module() {
 
     Function("initialize") {
       // TODO: to be implement
+
     }
 
     AsyncFunction("registerAccountWithEmail"){ countryCode: String, email: String, passwd: String, code: String, promise: Promise ->
