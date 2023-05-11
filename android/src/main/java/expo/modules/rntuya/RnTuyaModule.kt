@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.os.bundleOf
+import com.thingclips.sdk.core.PluginManager
 import com.thingclips.sdk.os.ThingOSUser
 import com.thingclips.sdk.user.ThingBaseUserPlugin
 import com.thingclips.smart.android.base.ThingSmartSdk
@@ -28,28 +29,8 @@ class RnTuyaModule : Module() {
     // The module will be accessible from `requireNativeModule('RnTuya')` in JavaScript.
     Name("RnTuya")
 
-    Events("onChangeTheme")
-
-    Function("setTheme") { theme: String ->
-      getPreferences().edit().putString("theme", theme).commit()
-      this@RnTuyaModule.sendEvent("onChangeTheme", bundleOf("theme" to theme))
-    }
-
-    Function("getTheme") {
-      return@Function getPreferences().getString("theme", "system")
-    }
-
-    Function("setDebugMode"){ isDebug: Boolean ->
-      ThingSmartSdk.setDebugMode(isDebug)
-    }
-
-    Function("initialize") {
-      // TODO: to be implement
-
-    }
-
-    AsyncFunction("sendVerifyCodeWithUserName"){ userName: String, region: String, countryCode: String,type: Int, promise: Promise ->
-      ThingHomeSdk.getUserInstance().sendVerifyCodeWithUserName(userName, region, countryCode, type, object: IResultCallback {
+    AsyncFunction("sendVerifyCodeWithUserName"){ options: SendVerifyCodeWithUserNameOptions, promise: Promise ->
+      ThingHomeSdk.getUserInstance().sendVerifyCodeWithUserName(options.userName, options.region, options.countryCode, options.type, object: IResultCallback {
         override fun onError(code: String?, error: String?) {
           if (error != null) {
             Log.d("tag", error)
@@ -63,8 +44,8 @@ class RnTuyaModule : Module() {
       })
     }
 
-    AsyncFunction("loginWithEmail"){ countryCode: String, email: String, passwd: String, promise: Promise ->
-      ThingHomeSdk.getUserInstance().loginWithEmail(countryCode, email, passwd, object: ILoginCallback {
+    AsyncFunction("loginWithEmail"){ options: LoginWithEmailOptions, promise: Promise ->
+      ThingHomeSdk.getUserInstance().loginWithEmail(options.countryCode, options.email, options.passwd, object: ILoginCallback {
         override fun onSuccess(user: User?) {
           if(user != null){
             promise.resolve(TuyaUser(username = user.username, sid = user.sid))
@@ -83,8 +64,8 @@ class RnTuyaModule : Module() {
 
     }
 
-    AsyncFunction("registerAccountWithEmail"){ countryCode: String, email: String, passwd: String, code: String, promise: Promise ->
-      ThingHomeSdk.getUserInstance().registerAccountWithEmail(countryCode, email, passwd, code, object : IRegisterCallback {
+    AsyncFunction("registerAccountWithEmail"){ options: RegisterAccountWithEmailOptions, promise: Promise ->
+      ThingHomeSdk.getUserInstance().registerAccountWithEmail(options.countryCode, options.email, options.passwd, options.code, object : IRegisterCallback {
         override fun onSuccess(user: User?) {
           if(user != null){
             promise.resolve(TuyaUser(username = user.username, sid = user.sid))
