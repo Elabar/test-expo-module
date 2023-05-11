@@ -1,6 +1,8 @@
-package expo.modules.rntuya.example;
+package com.dasher.smarthome;
 
 import android.app.Application;
+import com.thingclips.smart.home.sdk.ThingHomeSdk;
+
 import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 
@@ -59,6 +61,8 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+ThingHomeSdk.init(this);
+
     SoLoader.init(this, /* native exopackage */ false);
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
       // If you opted-in for the New Architecture, we load the native entry point for this app.

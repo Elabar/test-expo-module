@@ -1,4 +1,4 @@
-package expo.modules.rntuya.example;
+package com.dasher.smarthome;
 
 import android.os.Build;
 import android.os.Bundle;

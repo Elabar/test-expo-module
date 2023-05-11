@@ -8,9 +8,11 @@ import androidx.core.os.bundleOf
 import com.thingclips.sdk.os.ThingOSUser
 import com.thingclips.sdk.user.ThingBaseUserPlugin
 import com.thingclips.smart.android.base.ThingSmartSdk
+import com.thingclips.smart.android.user.api.ILoginCallback
 import com.thingclips.smart.android.user.api.IRegisterCallback
 import com.thingclips.smart.android.user.bean.User
 import com.thingclips.smart.home.sdk.ThingHomeSdk
+import com.thingclips.smart.sdk.api.IResultCallback
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.exception.CodedException
 import expo.modules.kotlin.modules.Module
@@ -46,10 +48,49 @@ class RnTuyaModule : Module() {
 
     }
 
+    AsyncFunction("sendVerifyCodeWithUserName"){ userName: String, region: String, countryCode: String,type: Int, promise: Promise ->
+      ThingHomeSdk.getUserInstance().sendVerifyCodeWithUserName(userName, region, countryCode, type, object: IResultCallback {
+        override fun onError(code: String?, error: String?) {
+          if (error != null) {
+            Log.d("tag", error)
+          }
+          promise.reject(CodedException(code, Throwable(error)))
+        }
+
+        override fun onSuccess() {
+          promise.resolve(true)
+        }
+      })
+    }
+
+    AsyncFunction("loginWithEmail"){ countryCode: String, email: String, passwd: String, promise: Promise ->
+      ThingHomeSdk.getUserInstance().loginWithEmail(countryCode, email, passwd, object: ILoginCallback {
+        override fun onSuccess(user: User?) {
+          if(user != null){
+            promise.resolve(TuyaUser(username = user.username, sid = user.sid))
+          }else{
+            promise.resolve(null)
+          }
+        }
+
+        override fun onError(code: String?, error: String?) {
+          if (error != null) {
+            Log.d("tag", error)
+          }
+          promise.reject(CodedException(code, Throwable(error)))
+        }
+      })
+
+    }
+
     AsyncFunction("registerAccountWithEmail"){ countryCode: String, email: String, passwd: String, code: String, promise: Promise ->
       ThingHomeSdk.getUserInstance().registerAccountWithEmail(countryCode, email, passwd, code, object : IRegisterCallback {
         override fun onSuccess(user: User?) {
-          promise.resolve(user)
+          if(user != null){
+            promise.resolve(TuyaUser(username = user.username, sid = user.sid))
+          }else{
+            promise.resolve(null)
+          }
         }
 
         override fun onError(code: String?, error: String?) {

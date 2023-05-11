@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'expo.modules.rntuya.example'
+    namespace 'com.dasher.smarthome'
     defaultConfig {
-        applicationId 'expo.modules.rntuya.example'
+        applicationId 'com.dasher.smarthome'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -195,6 +195,8 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+implementation 'com.thingclips.smart:thingsmart:5.0.1'
+implementation fileTree(dir: 'libs', include: ['*.aar'])
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

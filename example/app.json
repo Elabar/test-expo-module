@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "expo.modules.rntuya.example"
+      "package": "com.dasher.smarthome"
     },
     "web": {
       "favicon": "./assets/favicon.png"
