@@ -18,7 +18,6 @@ export const snackReducer = (
 ) => {
   switch (action.type) {
     case "add": {
-        console.log("TOAST DI MANA?")
       return {
         state: "open",
         message: action.message || "",

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-import * as RnTuya from "rn-tuya";
+import { RnTuyaUser } from "rn-tuya";
 
 import { SnackDispatchContext } from "../hooks/useSnack";
 
@@ -47,7 +47,7 @@ export default function User() {
             if (!userName || !countryCode) {
               throw new Error("username and country code is required");
             }
-            await RnTuya.sendVerifyCodeWithUserName({
+            await RnTuyaUser.sendVerifyCodeWithUserName({
               userName,
               region: "",
               countryCode,
@@ -70,7 +70,7 @@ export default function User() {
                 "username, password and country code is required"
               );
             }
-            const user = await RnTuya.loginWithEmail({
+            const user = await RnTuyaUser.loginWithEmail({
               countryCode,
               email: userName,
               passwd: password,
@@ -92,7 +92,7 @@ export default function User() {
                 "verificationCode, username, password, and country code is required"
               );
             }
-            await RnTuya.registerAccountWithEmail({
+            await RnTuyaUser.registerAccountWithEmail({
               countryCode,
               email: userName,
               passwd: password,
