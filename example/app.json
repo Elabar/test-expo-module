@@ -14,7 +14,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expo.modules.rntuya.example"
+      "bundleIdentifier": "com.dasher.smarthome"
     },
     "android": {
       "adaptiveIcon": {

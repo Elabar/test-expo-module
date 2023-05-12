@@ -53,6 +53,7 @@ export default function User() {
               countryCode,
               type: 1,
             });
+            snackDispatcher({ type: "add", message: "Success" });
           } catch (err) {
             snackDispatcher({ type: "add", message: err.message });
           }
@@ -74,7 +75,7 @@ export default function User() {
               email: userName,
               passwd: password,
             });
-            Alert.alert("Success", JSON.stringify(user, null, 2));
+            snackDispatcher({ type: "add", message: "Success" });
           } catch (err) {
             snackDispatcher({ type: "add", message: err.message });
           }
@@ -97,6 +98,7 @@ export default function User() {
               passwd: password,
               code: verificationCode,
             });
+            snackDispatcher({ type: "add", message: "Success" });
           } catch (err) {
             snackDispatcher({ type: "add", message: err.message });
           }

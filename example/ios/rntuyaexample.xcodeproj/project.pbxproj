@@ -27,6 +27,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = rntuyaexample/main.m; sourceTree = "<group>"; };
 		143E52A633D3432CABCB0D4B /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "rntuyaexample/noop-file.swift"; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-rntuyaexample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rntuyaexample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E2E911F2A0CEB66008B67F7 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-rntuyaexample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rntuyaexample.debug.xcconfig"; path = "Target Support Files/Pods-rntuyaexample/Pods-rntuyaexample.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-rntuyaexample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rntuyaexample.release.xcconfig"; path = "Target Support Files/Pods-rntuyaexample/Pods-rntuyaexample.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = rntuyaexample/SplashScreen.storyboard; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				143E52A633D3432CABCB0D4B /* noop-file.swift */,
+				5E2E911F2A0CEB66008B67F7 /* PrefixHeader.pch */,
 			);
 			name = rntuyaexample;
 			sourceTree = "<group>";
@@ -249,10 +251,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-rntuyaexample/Pods-rntuyaexample-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ThingMbedtls/ThingMbedtls.framework/ThingMbedtls",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ThingOpenSSLSDK/ThingOpenSSLSDK.framework/ThingOpenSSLSDK",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ThingMbedtls.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ThingOpenSSLSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,11 +275,23 @@
 				"${PODS_ROOT}/Target Support Files/Pods-rntuyaexample/Pods-rntuyaexample-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_ROOT}/../tuyaSDK/Build/ThingSmartCryption.xcframework/ios-arm64_x86_64-simulator/ThingSmartCryption.framework/CustomResources/Bundles/ThingSmartCryption.bundle",
+				"${PODS_ROOT}/ThingSmartNetworkKit/Build/ThingSmartNetworkKit.xcframework/ios-arm64/ThingSmartNetworkKit.framework/CustomResources/Assets/cerficate_h2_local",
+				"${PODS_ROOT}/ThingSmartNetworkKit/Build/ThingSmartNetworkKit.xcframework/ios-arm64/ThingSmartNetworkKit.framework/CustomResources/Assets/cerficate_v2",
+				"${PODS_ROOT}/ThingSmartNetworkKit/Build/ThingSmartNetworkKit.xcframework/ios-arm64/ThingSmartNetworkKit.framework/CustomResources/Assets/cerficate_v3",
+				"${PODS_ROOT}/ThingSmartNetworkKit/Build/ThingSmartNetworkKit.xcframework/ios-arm64/ThingSmartNetworkKit.framework/CustomResources/Assets/h2.ca.der",
+				"${PODS_ROOT}/ThingSmartNetworkKit/Build/ThingSmartNetworkKit.xcframework/ios-arm64/ThingSmartNetworkKit.framework/CustomResources/Assets/thingdomain_v1.thingcfg",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ThingSmartCryption.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/cerficate_h2_local",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/cerficate_v2",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/cerficate_v3",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/h2.ca.der",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/thingdomain_v1.thingcfg",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -325,6 +343,8 @@
 				CODE_SIGN_ENTITLEMENTS = rntuyaexample/rntuyaexample.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
@@ -339,8 +359,8 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.modules.rntuya.example;
-				PRODUCT_NAME = "rntuyaexample";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dasher.smarthome;
+				PRODUCT_NAME = rntuyaexample;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -356,6 +376,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = rntuyaexample/rntuyaexample.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PrefixHeader.pch";
 				INFOPLIST_FILE = rntuyaexample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -366,8 +388,8 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.modules.rntuya.example;
-				PRODUCT_NAME = "rntuyaexample";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dasher.smarthome;
+				PRODUCT_NAME = rntuyaexample;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

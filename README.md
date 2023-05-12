@@ -1,8 +1,8 @@
-# rn-tuya
+# React Native Tuya
 
-RN wrapper for tuya smart life SDK
+A React Native wrapper for Tuya's Smart Life SDK.
 
-# Android
+# Android Setup
 ## Preparing the aar file
 ### Get the aar file
 Get the `security-algorithm.zip` from [tuya IoT platform](https://developer.tuya.com/en/docs/app-development/integrated?id=Ka69nt96cw0uj#title-5-Step%203%3A%20Integrate%20with%20security%20component).
@@ -74,6 +74,50 @@ import com.thingclips.smart.home.sdk.ThingHomeSdk; // <-- import the SDK
     ThingHomeSdk.init(this); // <-- init the SDK
     // ...
   }
+```
+
+# iOS Setup
+## Prepare security image
+Goto Tuya IoT platform and download the iOS SDK.\
+Paste the SDK in `ios/tuyaSDK`. The content in the directory should look like this
+```
+- tuyaSDK
+  - Build
+    - ThingSmartCryption.xcframework
+    - VendorsXCFramework
+  - ThingSmartCryption.podspec
+```
+
+## Add pods to your iOS project
+open your podfile `ios/Podfile`, and add the following lines
+```
+source 'https://github.com/CocoaPods/Specs'
+source 'https://github.com/tuya/TuyaPublicSpecs.git'
+source 'https://github.com/tuya/tuya-pod-specs.git'
+
+target 'yourproject' do
+  // ...
+  pod "ThingSmartCryption", :path =>'./tuyaSDK'
+  pod "ThingSmartHomeKit"
+```
+We also need to add a header file. Open your iOS project via XCode, right click on the project and add a `PrefixHeader.pch` file by selecting `pch` file.
+```
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import <ThingSmartHomeKit/ThingSmartKit.h>
+#endif /* PrefixHeader_pch */
+```
+
+## Initialize the SDK
+Open  `AppDelegate.mm` and add this line to init the SDK with your key and secret.
+```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  // ...
+  self.initialProps = @{};
+  [[ThingSmartSDK sharedInstance] startWithAppKey:@"key" secretKey:@"secret"];
+}
 ```
 # API documentation
 
